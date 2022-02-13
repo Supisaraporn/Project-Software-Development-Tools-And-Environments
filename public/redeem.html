@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/view/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    <!-- FONT -->
+    <!-- Rowdie -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap" rel="stylesheet">
+    <!-- Kanit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <!-- kanit -->
+
+    <title>Read like a book ร้านเช่าอีบุ๊กอันดับ 1 ของประเทศไทย</title>
+
+    
+</head>
+<script>
+
+  var userPoint;
+
+  async function redeemPrice(id) {
+
+    const rewardInfo = await (await fetch('https://plttestapp.herokuapp.com/reward/'+id)).json();
+
+    if (userPoint < rewardInfo.price || rewardInfo.in_stock <= 0) {
+      alert("ดาวของคุณไม่เพียงพอ หรือรางวัลหมด");
+      return;
+    }
+
+    const d = new Date();
+    
+    const response_message = await (await fetch("https://plttestapp.herokuapp.com/removepoint", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "id": "62070093",
+        "point": rewardInfo.price,
+        "reward_id": rewardInfo.id
+      })
+    })).json();
+
+    await (await fetch("https://plttestapp.herokuapp.com/rewardhistory", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "redeem_id": "test",
+        "user_id": "62070093",
+        "reward_id": rewardInfo.id,
+        "time_exchange": d
+      })
+    })).json();
+
+    alert("แลก " + rewardInfo.name + " สำเร็จ");
+    location.reload();
+  }
+   
+  async function getBookInfo() {
+    try {
+      const bookData = await (await fetch('https://plttestapp.herokuapp.com/reward')).json();
+      const pointData = await (await fetch('https://plttestapp.herokuapp.com/userpoint/62070093')).json();
+      let showData = document.getElementById("showData");
+      let showPoint = document.getElementById("point-display");
+
+      userPoint = pointData.user_point;
+      showPoint.innerHTML = pointData.user_point;
+
+      let temp = "";
+      for(let i=0; i<bookData.length; i++) {
+        temp += '<div class="col-sm-4 mt-5">'
+                  +'<div class="decorate">'
+                  +'<div class="card" style="width: 70%;">'
+                    +'<div class="card-body">'
+                      +'<img id="pic-center" src="'+ bookData[i].cover_img+'" style="width: 200px; height: 300px;" class="card-img-top" alt="...">'
+                      +' <div style="margin: 20px;" >'
+                        +'<div class="d-flex justify-content-between" >'
+                          +'<p>ใช้ดาว</p>'
+                          +'<p>' + bookData[i].price + ' ดวง</p>'
+                        +'</div>'
+                        +'<p style="font-size: 16px ;position: absolute;left: 5;" ><b>'+bookData[i].name+'</b></p>'
+                        +'<br><p style="font-size: 16px ;position: absolute;left: 5;" >'+'สินค้าคงเหลือ&nbsp;'+bookData[i].in_stock+'&nbsp;ชิ้น'+'</p>'
+                        +'<a href="#" class="btn btn-primary py-2 px-5" style="margin-top:50px" data-bs-toggle="modal" data-bs-target="#product'+ i +'" >แลกของรางวัล</a>'
+
+                        +'<div class="modal fade" id="product'+ i +'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">'
+                            +'<div class="modal-dialog">'
+                              +'<div class="modal-content">'
+                                +'<div class="modal-header">'
+                                  +'<h5 class="modal-title" id="exampleModalLabel">'+ bookData[i].name +'</h5>'
+                                  +'<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>'
+                                +'</div>'
+                                +'<div class="modal-body d-flex">'
+                                  +'<p>'
+                                      +'ใช้ดาวจำนวน'
+                                  +'</p>'
+                                  +'<p>&nbsp; ' + bookData[i].price + ' ดวง</p>'
+                                +'</div>'
+                                +'<div class="modal-footer">'
+                                  +'<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>'
+                                  +'<button onclick="redeemPrice('+ bookData[i].id + ')" type="button" class="btn btn-primary" data-bs-dismiss="modal">ยืนยันการแลกของรางวัล</button>  '
+                                +'</div>'
+                              +'</div>'
+                            +'</div>'
+                          +'</div>'
+                      +'</div>'
+                    +'</div>'
+                  +'</div>'
+                +'</div>'
+                +'</div>';
+
+    
+      }
+
+      showData.innerHTML = temp;
+    } catch (err) {
+      alert(err.message);
+    }
+  }
+   getBookInfo()
+</script>
+<body>
+    <nav class="navbar navbar-dark bg-dark" style="height: 80px;">
+        <div class="container-fluid">
+         <a href="/" class="navbar-brand mb-0 h1" id="readLike" ><span style=" font-family: 'Rowdies', cursive;"> <b>Read Like A Book</b></span> </a>
+          <form class="d-flex" id="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="height: 50px;">
+            <button class="btn btn-outline-success" style="width: 170px; height: 50px;" type="submit"><span class="bi-search"></span> Search</button>
+            <i class="bi bi-suit-heart" style="color: white; margin-left: 20px; font-size: 30px; "></i>
+            <i class="bi bi-cart4 " style="color: white; margin-left: 20px; font-size: 30px; "></i>
+            <a href="userprofile.html" ><i class="bi bi-person" style="color: white; margin-left: 20px; font-size: 30px;"></i></a>
+        </form>
+        </div>
+      </nav>
+      <div style="margin-top: 20px;">
+          <center>
+              <div class="fs-3" >
+                <a href="/profile"  class="text-head "><b>โปรไฟล์</b></a>
+                <a href="#"  class="text-head ms-3"><b>หนังสือของฉัน</b></a>
+                <a href="#"  class="text-head ms-3" ><b>ของรางวัล</b></a>
+                <a href="/history"  class="text-head ms-3" ><b>ประวัติการแลกของรางวัล</b></a>
+              </div>
+              
+              </ul>
+          </center>
+      </div>
+      <div class="container fs-4">
+        <div style="margin: 70px;" >
+          <p>ดาวของฉัน <span id="point-display"></span> ดวง</p>
+          <p>ของรางวัลที่สามารถแลกได้ </p>
+          <hr>
+        </div>
+        <center>
+            <div class="row mt-5" id="showData">
+                
+                
+                
+             
+                
+                  
+            </div>
+            
+            
+
+            <center>
+              <hr class="m-5" style="width: 90%;" >
+          </center>
+          
+        </center>
+       </div>
+       <div id="footer">
+        <div class="row">
+            <div class="col-sm-4" >
+            <a href="https://github.com/bambam4334/Project-SW-Dev" class="footer-text" style="text-decoration:none;">About us</a>
+            </div>
+        </div>
+    </div>
+  </div>
+</body>
+</html>
