@@ -21,17 +21,23 @@ pipeline {
         }
         stage('Unit testing with coverage') {
             steps {
-                sh 'npm run test-unit'
+                dir('Backend') {
+                    sh 'npm run test-unit'
+                }
             }
         }
         stage('Integration testing with coverage') {
             steps {
-                sh 'npm run test-integration'
+                dir('Backend') {
+                    sh 'npm run test-integration'
+                }
             }
         }
         stage('E2E testing with coverage') {
             steps {
-                sh 'npm run test-e2e'
+                dir('Backend') {
+                    sh 'npm run test-e2e'
+                }
             }
         }
         stage('Deploy development branch') {
