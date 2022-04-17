@@ -4,19 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test-e2e": "cypress run e2e-testing.js",
-    "test-int": "cypress run integration-testing.js",
-    "test-unit": "cypress run unit-testing.js",
-    "start": "nodemon node server.js",
-    "cypress:open": "cypress open"
+    "test-e2e": "jest e2e-testing.test.js --coverage",
+    "test-integration": "jest integration-testing.test.js --coverage",
+    "test-unit": "jest --coverage unit-testing.test.js",
+    "start": "nodemon node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@cypress/code-coverage": "^3.9.12",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "cypress": "^9.5.2",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-validator": "^6.14.0",
@@ -24,7 +21,6 @@
     "jwt-check-expiration": "^1.0.5",
     "mongoose": "^6.2.4",
     "nodemon": "^2.0.15",
-    "regenerator-runtime": "^0.13.9",
-    "typescript": "^4.6.2"
+    "jest": "^27.5.1"
   }
 }
