@@ -53,9 +53,7 @@ pipeline {
         stage('Deploy main branch') {
             steps {
                 echo 'automatic deploy main branch to heroku and docker'
-                withCredentials([
-                string(credentialsId: 'T12_ROOTPASS_SECRET', variable: 'rootpass'),
-                usernamePassword(credentialsId: 'T12_DOCKER', passwordVariable: 'dockerpassword', usernameVariable: 'dockerusername')]) {
+                withCredentials([string(credentialsId: 'T12_ROOTPASS_SECRET', variable: 'rootpass')]) {
                     script {
                         def remote = [:]
                         remote.name = 'T12'
@@ -63,14 +61,9 @@ pipeline {
                         remote.user = 'root'
                         remote.password = "${rootpass}"
                         remote.allowAnyHosts = true
-
-                        sshCommand remote: remote, command: "docker login -u $dockerusername -p $dockerpassword"
-                        sshCommand remote: remote, command: "docker push nanazaki/team-12-frontend:1.0"
-                              
-                        sshCommand remote: remote, command: "docker pull nanazaki/team-12-frontend:1.0"
+                        sshCommand remote: remote, command: 'git clone https://github.com/bambam4334/Project-SW-Dev.git'
                         sshCommand remote: remote, command: 'docker-compose -f Project-SW-Dev/Frontend/docker-compose.yml up -d'
-                        sshCommand remote: remote, command: 'docker-compose -f Project-SW-Dev/Frontend/docker-compose.yml up -d'
-                        sshCommand remote: remote, command: "docker logout"
+                        sshCommand remote: remote, command: 'rm -r Project-SW-Dev'
                     }
                 }
             }
