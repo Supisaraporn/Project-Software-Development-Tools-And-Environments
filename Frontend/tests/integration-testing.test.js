@@ -17,3 +17,14 @@ test("properly registers an account", async () => {
     });
     expect(response.data.success).toBe(true);
 }, 10000);
+
+test("properly unregisters an account", async () => {
+    const response = await axios({
+        method: "POST",
+        url: "https://read-like-a-book-api.herokuapp.com/user/unregister",
+        data: {
+            "id": "integration-testing"
+        },
+    });
+    expect(response.data.success).toBe(true);
+}, 10000);
