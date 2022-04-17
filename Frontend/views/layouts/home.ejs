@@ -30,35 +30,37 @@
                             <!-- Book Cover -->
 
                             <!-- Book Description -->
-                            <div class="card-body">
-                                <form method="POST" action="/buy">
-                                <input type="hidden" name="id" :value="book.id">
-                                <a class="text-decoration-none" href="#">
-                                    <h5 class="card-title text-dark fw-bold mt-2">
-                                        {{  book.name }}
-                                    </h5>
-                                </a>
-                                
-                                <p>
-                                    <span class="fw-bold">
-                                        สำนักพิมพ์:
-                                    </span>
-                                        {{ book.publisher }}<br>
-                                    <span class="fw-bold">
-                                        ผู้เขียน:
-                                    </span>
-                                    <template v-for="author in book.author">
-                                        {{ author }}
-                                    </template>
-                                </p>
-                                <p class="btn bg-warning">
-                                    <span class="text-white">
-                                        {{ parseInt(book.price) }} ฿
-                                    </span>
-                                </p>
-                            </div>
-                            <button class="btn btn-primary mt-auto mx-3">เพิ่มในตะกร้า</button>
-                                </form>
+                            <form method="POST" action="/tocart">
+                                <div class="card-body">
+                                    <input type="hidden" name="id" :value="book.id">
+                                    <input type="hidden" name="name" :value="book.name">
+                                    <input type="hidden" name="image" :value="book.cover_img">
+                                    <input type="hidden" name="price" :value="book.price">
+                                    <a class="text-decoration-none" href="#">
+                                        <h5 class="card-title text-dark fw-bold mt-2">
+                                            {{  book.name }}
+                                        </h5>
+                                    </a>
+                                    <p>
+                                        <span class="fw-bold">
+                                            สำนักพิมพ์:
+                                        </span>
+                                            {{ book.publisher }}<br>
+                                        <span class="fw-bold">
+                                            ผู้เขียน:
+                                        </span>
+                                        <template v-for="author in book.author">
+                                            {{ author }}
+                                        </template>
+                                    </p>
+                                    <p class="btn bg-warning">
+                                        <span class="text-white">
+                                            {{ parseInt(book.price) }} ฿
+                                        </span>
+                                    </p>
+                                </div>
+                                <button class="btn btn-primary mt-auto mx-3">เพิ่มในตะกร้า</button>
+                            </form>
                             
                             <!-- Book Description -->
                         </div>
