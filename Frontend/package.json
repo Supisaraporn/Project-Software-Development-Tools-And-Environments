@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
     "heroku-postbuild": "npm run build",
-    "cypress:open": "cypress open"
+    "test-e2e": "jest e2e-testing.test.js --coverage",
+    "test-component": "jest --coverage component-testing.test.js --env=jsdom",
+    "test-integration": "jest integration-testing.test.js --coverage",
+    "test-unit": "jest --coverage unit-testing.test.js --env=jsdom",
+    "start": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +17,6 @@
   "dependencies": {
     "axios": "^0.26.1",
     "cookie-session": "^2.0.0",
-    "cypress": "^9.5.2",
     "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
@@ -25,5 +26,9 @@
   "engines": {
     "node": "14.17.1",
     "npm": "6.14.13"
+  },
+  "devDependencies": {
+    "cypress": "^9.5.3",
+    "jest": "^27.5.1"
   }
 }
