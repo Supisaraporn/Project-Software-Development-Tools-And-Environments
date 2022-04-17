@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  web:
+  frontend:
     build: .
     command: npm run start
     ports:
-      - "3000:8080"
+      - "2515:2784"
