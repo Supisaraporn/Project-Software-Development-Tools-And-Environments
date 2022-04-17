@@ -4,7 +4,9 @@ pipeline {
     stages {
         stage('Pull code') {
             steps {
-                checkout scm
+                dir('Backend') {
+                    checkout scm
+                }
             }
         }
         stage('Setup environment') {
