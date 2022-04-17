@@ -5,4 +5,4 @@ services:
     build: .
     command: npm run start
     ports:
-      - "2515:2784"
+      - "2514:2784"
