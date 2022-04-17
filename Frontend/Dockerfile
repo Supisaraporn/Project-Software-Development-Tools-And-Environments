@@ -8,9 +8,9 @@ RUN npm install
 
 COPY . .
 
-ENV PORT=8080
+ENV PORT=2784
 ENV cookieKey=RLABWEBAPPLICATION
 
-EXPOSE 8080
+EXPOSE 2784
 
 CMD [ "npm", "start" ]
