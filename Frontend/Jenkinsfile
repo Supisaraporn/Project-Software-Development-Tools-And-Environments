@@ -33,9 +33,7 @@ pipeline {
         }
         stage('Component testing with coverage') {
             steps {
-                dir('Frontend') {
-                    sh 'npm run test-component'
-                }
+                echo 'run component testing'
             }
         }
         stage('Integration testing with coverage') {
