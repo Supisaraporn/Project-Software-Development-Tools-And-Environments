@@ -54,7 +54,7 @@ pipeline {
             steps {
                 echo 'automatic deploy main branch to heroku and docker'
                 withCredentials([
-                string(credentialsId: 'T12_ROOTPASS_SECRET', variable: 'rootpass')
+                string(credentialsId: 'T12_ROOTPASS_SECRET', variable: 'rootpass'),
                 usernamePassword(credentialsId: 'T12_DOCKER', passwordVariable: 'dockerpassword', usernameVariable: 'dockerusername')]) {
                     script {
                         def remote = [:]
