@@ -1,0 +1,152 @@
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            collection: [],
+            action: "default",
+
+            name: "",
+            image: "",
+            author: "",
+            authors: [],
+            price: "",
+            publisher: "",
+            story: "",
+            synopsis: "",
+
+            updateName: "",
+            updateImage: "",
+            updateAuthor: "",
+            updateAuthors: [],
+            updatePrice: "",
+            updatePublisher: "",
+            updateStory: "",
+            updateSynopsis: "",
+            bookToUpdate: "default",
+            updateSearchName: "",
+
+            bookToDelete: "default",
+            searchName: "",
+        },
+        methods: {
+            addAuthor() {
+                if (this.author == "") {
+                    return;
+                }
+                this.authors.push(this.author);
+            },
+            addUpdateAuthor() {
+                if (this.updateAuthor == "") {
+                    return;
+                }
+                this.updateAuthors.push(this.updateAuthor);
+            },
+            clearAuthor() {
+                this.authors = [];
+            },
+            clearUpdateAuthor() {
+                this.updateAuthors = [];
+            },
+            async insertData() {
+                let data = {
+                    id: (this.collection.length+1)+"",
+                    author: this.authors,
+                    cover_img: this.image,
+                    name: this.name,
+                    price: parseInt(this.price),
+                    publisher: this.publisher,
+                    story: this.story,
+                    synopsis: this.synopsis,
+                };
+                const response = await axios({
+                    method: "POST",
+                    url: "https://read-like-a-book-api.herokuapp.com/book/insert",
+                    data: data,
+                });
+                if (response.data.success) {
+                    window.location.reload();
+                } else {
+                    alert("error");
+                };
+            },
+            async updateData() {
+                let data = {
+                    id: this.bookToUpdate,
+                    oldId: this.bookToUpdate,
+                    author: this.updateAuthors,
+                    cover_img: this.updateImage,
+                    name: this.updateName,
+                    price: parseInt(this.updatePrice),
+                    publisher: this.updatePublisher,
+                    story: this.updateStory,
+                    synopsis: this.updateSynopsis,
+                };
+                const response = await axios({
+                    method: "POST",
+                    url: "https://read-like-a-book-api.herokuapp.com/book/update",
+                    data: data,
+                });
+                if (response.data.success) {
+                    window.location.reload();
+                } else {
+                    alert("error");
+                };
+            },
+            async deleteData() {
+                const response = await axios({
+                    method: "POST",
+                    url: "https://read-like-a-book-api.herokuapp.com/book/delete",
+                    data: {
+                        id: this.bookToDelete,
+                    },
+                });
+                if (response.data.success) {
+                    window.location.reload();
+                } else {
+                    alert("error");
+                };
+            },
+        },
+        computed: {
+            searchedCollection() {
+                let filterCollection = [];
+                this.collection.forEach(element => {
+                    if ((element.name).includes(this.searchName)) {
+                        filterCollection.push(element);
+                    } else if ((element.publisher).includes(this.searchName)) {
+                        filterCollection.push(element);
+                    };
+                });
+
+                if (filterCollection.length == 0) {
+                    return this.collection;
+                };
+                return filterCollection;
+            },
+            updateSearchedCollection() {
+                let filterCollection = [];
+                this.collection.forEach(element => {
+                    if ((element.name).includes(this.searchName)) {
+                        filterCollection.push(element);
+                    } else if ((element.publisher).includes(this.searchName)) {
+                        filterCollection.push(element);
+                    };
+                });
+
+                if (filterCollection.length == 0) {
+                    return this.collection;
+                };
+                return filterCollection;
+            },
+        },
+        created() {
+            axios
+            .get("https://read-like-a-book-api.herokuapp.com/book/get/all")
+            .then(
+                (response) => {
+                    this.collection = response.data.payload.data;
+                },
+            );
+        },
+    });
+</script>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Head Tag Include -->
+<%- include("../partials/head-tag-partial.ejs") %>
+<!-- Head Tag Include -->
+
+<!-- Header Include -->
+<%- include("../partials/header-partial.ejs") %>
+<!-- Header Include -->
+
+<body class="d-flex flex-column min-vh-100">
+    <div id="app">
+        <div class="container self-font-family">
+            <!-- Reward Modifier -->
+            <div class="row mt-5">
+                <div class="col-12 p-5">
+                    <h3>Reward</h3>
+                    <label class="pt-3">Action</label>
+                    <select class="form-select" v-model="action">
+                        <option disabled value="default">-- Select an Action --</option>
+                        <option value="insert">Insert Data</option>
+                        <option value="delete">Delete Data</option>
+                        <option value="update">Update Data</option>
+                    </select>
+                    <template v-if="action == 'insert'">
+                        <label class="pt-3">Reward Name</label>
+                        <input class="form-control" type="text" v-model="name">
+                        <label class="pt-3">Cover Image</label>
+                        <input class="form-control" type="text" v-model="image">
+                        <label class="pt-3">Price</label>
+                        <input class="form-control" type="text" v-model="price">
+                        <label class="pt-3">In Stock</label>
+                        <input class="form-control" type="text" v-model="inStock">
+                        <button class="form-control btn btn-primary mt-3" @click="insertData">Insert Data</button>
+                    </template>
+                    <template v-if="action == 'delete'">
+                        <label class="pt-3">Item</label>
+                        <input class="form-control" type="text" v-model="searchName">
+                        <select class="form-select mt-3" v-model="rewardToDelete">
+                            <option disabled value="default">-- Select a Data --</option>
+                            <template v-for="data in searchedCollection">
+                                <option :value="data.id">{{ data.publisher }} | {{ data.name }}</option>
+                            </template>
+                        </select>
+                        <button class="form-control btn btn-primary mt-3" @click="deleteData">Delete Data</button>
+                    </template>
+                    <template v-if="action == 'update'">
+                        <label class="pt-3">Item</label>
+                        <input class="form-control" type="text" v-model="updateSearchName">
+                        <select class="form-select mt-3" v-model="rewardToUpdate">
+                            <option disabled value="default">-- Select a Data --</option>
+                            <template v-for="data in updateSearchedCollection">
+                                <option :value="data.id">{{ data.publisher }} | {{ data.name }}</option>
+                            </template>
+                        </select>
+                        <label class="pt-3">Reward Name</label>
+                        <input class="form-control" type="text" v-model="updateName">
+                        <label class="pt-3">Cover Image</label>
+                        <input class="form-control" type="text" v-model="updateImage">
+                        <label class="pt-3">Price</label>
+                        <input class="form-control" type="text" v-model="updatePrice">
+                        <label class="pt-3">In Stock</label>
+                        <input class="form-control" type="text" v-model="updateInStock">
+                        <button class="form-control btn btn-primary mt-3" @click="updateData">Update Data</button>
+                    </template>
+                </div>
+            </div>
+            <!-- Reward Modifier -->
+        </div>
+    </div>
+
+    <!-- Footer Include -->
+    <%- include("../partials/footer-partial.ejs") %>
+    <!-- Footer Include -->
+
+</body>
+<!-- Vue Include -->
+<%- include("../vues/admin-reward-modifier-vue.ejs") %>
+<!-- Vue Include -->
+</html>
