@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Head Tag Include -->
+<%- include("../partials/head-tag-partial.ejs") %>
+<!-- Head Tag Include -->
+
+<!-- Header Include -->
+<%- include("../partials/header-partial.ejs") %>
+<!-- Header Include -->
+
+<body class="d-flex flex-column min-vh-100">
+    <div id="app">
+        <div class="container self-font-family mb-5">
+            <div class="row mt-5">
+                <div class="col-4 p-5">
+                    <div class="card">
+                        <i class="fa-solid fa-database fa-10x p-5"></i>
+                        <div class="card-body">
+                            <h5 class="card-title">Database Modifier</h5>
+                            <p class="card-text">Modified specific collections in our database.</p>
+                            <a href="/admin/modifier" class="btn btn-primary"><i class="fa-solid fa-arrow-right-long"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Include -->
+    <%- include("../partials/footer-partial.ejs") %>
+    <!-- Footer Include -->
+
+</body>
+<!-- Vue Include -->
+<%- include("../vues/admin-dashboard-vue.ejs") %>
+<!-- Vue Include -->
+</html>
