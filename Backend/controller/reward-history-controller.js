@@ -1,9 +1,3 @@
-// Config
-
-const { sign } = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-
 // Import Models
 
 const {
@@ -17,16 +11,7 @@ const {
 module.exports = {
     getAllUserHistoryController: async (req, res, next) => { 
         try {
-            const userId = jwt.verify(
-                req.token,
-                process.env.SECRET,
-                (err, authData) => {
-                    return {
-                        "user_id": authData.result.id,
-                    };
-                },
-            );
-            const response = await getAllUserHistory(userId);
+            const response = await getAllUserHistory(req.token);
             res.status(200).json(response);
             res.end();
         } catch (err) {

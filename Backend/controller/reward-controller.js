@@ -1,8 +1,3 @@
-// Config
-
-const { sign, jwt } = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-
 // Import Models
 
 const {

@@ -1,8 +1,3 @@
-// Config
-const { sign } = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-
 // Import Models
 
 const {
@@ -12,6 +7,7 @@ const {
     register,
     pointIncrementer,
     deleteUser,
+    getUserData,
 } = require("../model/user-model");
 
 // Import Functions
@@ -62,7 +58,7 @@ module.exports = {
                 return res.status(200).json({
                     success: false,
                     payload: {
-                        message: "Username is not long enough. (3 is minimum length)",
+                        message: "Username is too short. (4 is the minimum length)",
                     },
                 });
             };
@@ -72,7 +68,7 @@ module.exports = {
                 return res.status(200).json({
                     success: false,
                     payload: {
-                        message: "Password is not long enough. (8 is minimum length)",
+                        message: "Password is too short. (8 is the minimum length)",
                     },
                 });
             };
@@ -85,8 +81,6 @@ module.exports = {
                     id: req.body.id,
                 });
                 if (usernameCheck.success) {
-                    const password = await bcrypt.hash(req.body.password, 10);
-                    req.body.password = password;
                     const response = await register(req.body);
                     res.status(200).json(response);
                     res.end();
@@ -121,17 +115,11 @@ module.exports = {
     },
     getDataController: async (req, res, next) => {
         try {
-            const userData = jwt.verify(
-                req.token,
-                process.env.SECRET,
-                (err, authData) => {
-                    return authData.result;
-                },
-            );
+            const userData = await getUserData(req.token);
             res.status(200).json({
                 success: true,
                     payload: {
-                        data: userData,
+                        data: userData.payload.data,
                     },
             });
         } catch (err) {

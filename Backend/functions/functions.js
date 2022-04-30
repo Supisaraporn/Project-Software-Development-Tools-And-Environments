@@ -12,7 +12,7 @@ module.exports = {
         return false;
     },
     validateUser: (user) => {
-        if (user.length > 3) {
+        if (user.length >= 4) {
             return true;
         }
         return false;

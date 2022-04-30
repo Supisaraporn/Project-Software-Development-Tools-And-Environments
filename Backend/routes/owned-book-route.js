@@ -15,7 +15,7 @@ const {
 
 // Create Routes
 
-router.post("/buy", [ body("book_id").notEmpty()], apiValidation, verifyToken, buyBookController);
+router.post("/buy", [ body("book_id").notEmpty(), body("point").notEmpty() ], apiValidation, verifyToken, buyBookController);
 
 router.post("/get/user/all", [ body("id").notEmpty()], apiValidation, getOwnedBookController);
 

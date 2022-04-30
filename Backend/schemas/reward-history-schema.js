@@ -7,15 +7,10 @@ const reqString = {
     required: true,
 };
 
-const reqDate = {
-    type: Date,
-    required: true,
-};
-
 const rewardHistorySchema = mongoose.Schema({
     user_id: reqString,
     reward_id: reqString,
-    time_exchange: reqDate,
+    time_exchange: reqString,
 });
 
 module.exports = mongoose.model("reward_historys", rewardHistorySchema);
