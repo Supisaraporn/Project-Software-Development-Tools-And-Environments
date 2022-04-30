@@ -11,19 +11,23 @@
 <body class="d-flex flex-column min-vh-100">
     <div id="app">
         <div class="container self-font-family mb-5">
-            <div class="d-flex justify-content-between m-5" style="background-color:rgb(199, 198, 198);padding: 30px;border-radius: 10px;" >
-                <div class="d-flex">
-                    <img src=""  style="width:200px; height: 300px;">
-                    <div class="m-5">
-                        <p>  rewardInfo.name  </p>
-                        <p>ใช้ดาวจำนวน   rewardInfo.price   ดวง</p>
+
+            <template v-if="history.length > 0">
+                <div class="d-flex justify-content-between m-5" style="background-color:rgb(199, 198, 198);padding: 30px;border-radius: 10px;" v-for="item in history">
+                    <div class="d-flex">
+                        <img :src="item.reward_info[0].cover_img"  style="width:200px; height: 300px;">
+                        <div class="m-5">
+                            <p>  {{ item.reward_info[0].name }}  </p>
+                            <p>ใช้ดาวจำนวน   {{ item.reward_info[0].price }}   ดวง</p>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <p>ทำการแลกเมื่อวันที่</p>
+                        <p>{{ item.time_exchange }}</p>
                     </div>
                 </div>
-                <div class="mt-5">
-                    <p>ทำการแลกเมื่อวันที่</p>
-                    <p>bookData[i].time_exchange</p>
-                </div>
-            </div>
+            </template>
+            
         </div>
     </div>
 
@@ -33,7 +37,13 @@
 <%- include("../partials/footer-partial.ejs") %>
 <!-- Footer Include -->
 
-<!-- Vue Include -->
-<%- include("../vues/history-vue.ejs") %>
-<!-- Vue Include -->
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            history: JSON.parse(`<%- history %>`),
+        },
+    });
+</script>
+
 </html>

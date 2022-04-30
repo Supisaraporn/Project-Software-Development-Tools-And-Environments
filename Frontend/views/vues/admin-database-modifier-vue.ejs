@@ -12,7 +12,7 @@
         watch: {
             selectedCollection(next, pre) {
                 axios
-                .get("https://read-like-a-book-api.herokuapp.com/"+next+"/get/all")
+                .get("http://localhost:5000/"+next+"/get/all")
                 .then(
                     (response) => {
                         this.nowCollection = response.data.payload.data;

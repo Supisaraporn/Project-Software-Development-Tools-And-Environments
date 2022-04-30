@@ -76,7 +76,7 @@ app.get("/myaccount", ifNotLoggedIn, async (req, res, next) => {
     res.render("layouts/profile", {
         nowOnPage: "profile",
         title: "Read Like a Book | User Profile",
-        userData: response.data.payload.data,
+        userData: JSON.stringify(response.data.payload.data),
     });
 });
 
@@ -91,10 +91,18 @@ app.get("/rewards", ifNotLoggedIn, async (req, res, next) => {
 
 app.get("/history", ifNotLoggedIn, async (req, res, next) => {
     const response = await getUserData(req.session.token);
+    const response02 = await axios({
+        method: "GET",
+        url: "http://localhost:5000/history/get/user/all",
+        headers: {
+            authorization: "bearer " + req.session.token,
+        },
+    });
     res.render("layouts/history", {
         nowOnPage: "history",
         title: "Read Like a Book | Redeem History",
         userData: response.data.payload.data,
+        history: JSON.stringify(response02.data.payload.data),
     });
 });
 
@@ -272,7 +280,7 @@ app.post("/register", async (req, res, next) => {
     const { username, password, firstName, lastName, email } = req.body;
     axios({
         method: "POST",
-        url: "https://read-like-a-book-api.herokuapp.com/user/register",
+        url: "http://localhost:5000/user/register",
         data: {
             id: username,
             password: password,
@@ -310,7 +318,23 @@ app.post("/buy", async (req, res, next) => {
     if (req.body.point) {
         point = req.body.point;
     }
-    axios({
+    let increasePoint = 0;
+    req.session.cart.forEach(element => {
+        increasePoint += (element.price*3)/100;
+    });
+    console.log(increasePoint);
+    let response = await axios({
+        method: "POST",
+        url: "http://localhost:5000/user/point",
+        headers: {
+            authorization: "bearer " + req.session.token,
+        },
+        data: {
+            id: req.body.user_id,
+            point: parseInt(increasePoint),
+        },
+    })
+    await axios({
         method: "POST",
         url: "http://localhost:5000/owned-book/buy",
         headers: {
@@ -329,6 +353,33 @@ app.post("/buy", async (req, res, next) => {
             res.redirect('/');
         },
     );
+});
+
+app.post("/redeem", async (req, res, next) => {
+    let response = await axios({
+        method: "POST",
+        url: "http://localhost:5000/user/point",
+        headers: {
+            authorization: "bearer " + req.session.token,
+        },
+        data: {
+            id: req.body.user_id,
+            point: -parseInt(req.body.item_price),
+        }
+    })
+    let response02 = await axios({
+        method: "POST",
+        url: "http://localhost:5000/history/add",
+        headers: {
+            authorization: "bearer " + req.session.token,
+        },
+        data: {
+            user_id: req.body.user_id,
+            reward_id: req.body.item_id,
+            time_exchange: "TEST",
+        }
+    })
+    res.redirect("/history");
 });
 
 app.get("/logout", (req, res) => {

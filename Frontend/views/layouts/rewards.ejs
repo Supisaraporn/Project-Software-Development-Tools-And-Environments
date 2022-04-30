@@ -97,7 +97,12 @@
                             <!-- Modal Footer -->
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" @click="nowShowModal=false">ยกเลิก</button>
-                                <button class="btn btn-primary">ยืนยันการแลกรางวัล</button>
+                                <form method="POST" action="/redeem">
+                                    <button class="btn btn-primary">ยืนยันการแลกรางวัล</button>
+                                    <input name="user_id" type="hidden" value="<%= userData.id %>">
+                                    <input name="item_id" type="hidden" :value="nowItemModal.id">
+                                    <input name="item_price" type="hidden" :value="nowItemModal.price">
+                                </form>
                             </div>
                             <!-- Modal Footer -->
                         </div>

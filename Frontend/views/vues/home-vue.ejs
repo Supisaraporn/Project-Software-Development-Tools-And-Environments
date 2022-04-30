@@ -6,7 +6,7 @@
         },
         created() {
             axios
-                .get("https://read-like-a-book-api.herokuapp.com/book/get/all")
+                .get("http://localhost:5000/book/get/all")
                 .then(
                     (response) => {
                         if (response.data.success) {
