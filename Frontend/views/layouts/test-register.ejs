@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Head Tag Include -->
+<%- include("../partials/head-tag-partial.ejs") %>
+<!-- Head Tag Include -->
+
+<!-- Navigation Bar Include -->
+<nav class="navbar navbar-expand navbar-dark bg-dark self-font-family">
+    <div class="container">
+        <!-- Brand Logo -->
+        <a href="/login" class="navbar-brand m-2">
+            <i class="fa-solid fa-book fa-2x"></i>
+        </a>
+        <!-- Brand Logo -->
+    </div>
+</nav>
+<!-- Navigation Bar Include -->
+
+<body class="d-flex flex-column min-vh-100">
+    <div id="app">
+        <div class="container self-font-family mb-5">
+            <div class="row">
+                <div class="col-6 h-100 my-auto">
+                    <span class="d-flex flex-column justify-content-center align-items-center">
+                        <i class="fa-solid fa-book fa-8x"></i>
+                    </span>
+                </div>
+                <div class="col-6">
+                    <div class="card mt-5 p-3">
+                        <div class="card-body card-body d-flex flex-column">
+                            <!-- Form Register -->
+                            <form method="POST" action="/register">
+                                <div class="card-body">
+                                    <h3>
+                                        <a href="/login" class="text-decoration-none text-dark">
+                                            เข้าสู่ระบบ
+                                        </a>
+                                        /
+                                        <span class="text-secondary">
+                                            ลงทะเบียน
+                                        </span>
+                                    </h3>
+                                    <label class="mt-3">ชื่อผู้ใช้</label>
+                                    <input name="username" class="form-control" type="text" placeholder="ชื่อผู้ใช้" required>
+                                    <label class="mt-3">รหัสผ่าน</label>
+                                    <div class="input-group">
+                                        <input name="password" class="form-control" placeholder="รหัสผ่าน" :type="passwordType" required>
+                                        <span class="btn btn-dark" class="input-group-text">
+                                            <a @click="isShowPassword = !isShowPassword">
+                                                <span v-show="isShowPassword">
+                                                    <i class="fa fa-eye"></i>
+                                                </span>
+                                                <span v-show="!isShowPassword">
+                                                    <i class="fa fa-eye-slash"></i>
+                                                </span>
+                                            </a>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="w-50 pe-3">
+                                            <label class="mt-3">ชื่อจริง</label>
+                                            <input name="firstName" class="form-control" type="text" placeholder="ชื่อจริง" required>
+                                        </div>
+                                        <div class="w-50 ps-3">
+                                            <label class="mt-3">นามสกุล</label>
+                                            <input name="lastName" class="form-control" type="text" placeholder="นามสกุล" required>
+                                        </div> 
+                                    </div>
+                                    <label class="mt-3">อีเมล</label>
+                                    <input name="email" class="form-control" type="email" placeholder="อีเมล" required>
+                                    <button class="btn btn-primary form-control mt-4">ลงทะเบียน</button>
+                                </div>
+                            </form>
+                            <!-- Form Register -->
+                            <% if (error) { %>
+                                <p class="text-danger px-3">
+                                    <%= error %>
+                                </p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- Footer Include -->
+<%- include("../partials/footer-partial.ejs") %>
+<!-- Footer Include -->
+
+<!-- Vue Include -->
+<%- include("../vues/login-vue.ejs") %>
+<!-- Vue Include -->
+</html>
