@@ -10,16 +10,17 @@
 
 <body class="d-flex flex-column min-vh-100">
     <div id="app">
+        <input id="id" type="hidden" :value="userData.id">
         <div class="container self-font-family mb-5">
             <div class="row mt-5 bg-light rounded-pill">
                 <!-- Collection -->
                 <div class="col-12 d-flex justify-content-center p-5">
                     <div class="col-4 text-center border-end border-2 border-dark">
-                        <p class="fs-1 fw-bold">0 <i class="fa-solid fa-book fa-sm"></i></p>
+                        <p class="fs-1 fw-bold">{{  bookList.length }} <i class="fa-solid fa-book fa-sm"></i></p>
                         <p class="fs-3" >จำนวนหนังสือ</p>
                     </div>
                     <div class="col-4 text-center border-end border-2 border-dark">
-                        <p class="fs-1 fw-bold"><%= userData.user_point %> <i class="fa-solid fa-star fa-sm"></i></p>
+                        <p class="fs-1 fw-bold">{{  userData.user_point }} <i class="fa-solid fa-star fa-sm"></i></p>
                         <p class="fs-3" >จำนวนดาวสะสม</p>   
                     </div>
                     <div class="col-4 text-center">
@@ -38,14 +39,14 @@
                             <i class="fa-solid fa-circle-user fa-6x"></i>
                             <div class="px-5">
                                 <p class="fs-2 fw-bold pt-3">
-                                    <%= userData.name %> <%= userData.lastname %>
+                                    {{ userData.name }} {{ userData.lastname }}
                                     <br>
                                     <span class="fs-4 fw-normal">
-                                        <%= userData.id %>
+                                        {{ userData.id }}
                                         <span class="fs-2 fw-bold">
                                             /
                                         </span>
-                                        <%= userData.email %>
+                                        {{ userData.email }}
                                     </span>
                                     
                                 </p>
@@ -57,9 +58,9 @@
                                 <i class="fa-solid fa-pencil fa-2x text-dark"></i>
                             </a>  
                         </div>
-                        <p class="fs-6"><%= userData.user_address %></p>    
+                        <p class="fs-6">{{ userData.user_address }}</p>    
                         <hr>
-                        <a class="text-decoration-none" href="#">
+                        <a class="text-decoration-none" href="/bookshelf">
                             <p class="fs-5 fw-bold text-dark">ชั้นหนังสือ</p>
                         </a>
                         <hr>

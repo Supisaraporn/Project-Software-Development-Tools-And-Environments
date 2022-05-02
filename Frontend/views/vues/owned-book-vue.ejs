@@ -7,7 +7,7 @@
         async mounted() {
             const response = await axios({
                 method: "POST",
-                url: "https://read-like-a-book-api.herokuapp.com/owned-book/get/user/all",
+                url: "http://localhost:5000/owned-book/get/user/all",
                 data: {
                     id: document.getElementById("id").value,
                 },

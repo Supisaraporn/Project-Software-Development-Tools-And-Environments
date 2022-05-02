@@ -2,24 +2,23 @@
     var app = new Vue({
         el: '#app',
         data: {
-            userData: [],
+            userData: JSON.parse(`<%- userData %>`),
+            bookList: [],
         },
-        created() {
-            // axios
-            //     .post("https://read-like-a-book-api.herokuapp.com/user/get/data", {
-            //         Headers: {
-            //             Authorization: 'Bearer ' + req.session.token,
-            //         },
-            //     })
-            //     .then(
-            //         (response) => {
-            //             if (response.data.success) {
-            //                 this.bookList = response.data.payload.data;
-            //             } else {
-            //                 console.log("Failed to get data.");
-            //             };
-            //         },
-            //     );
+        async mounted() {
+            const response = await axios({
+                method: "POST",
+                url: "http://localhost:5000/owned-book/get/user/all",
+                data: {
+                    id: document.getElementById("id").value,
+                },
+            })
+            .then(
+                (response) => {
+                    return response.data.payload.data;
+                },
+            );
+            this.bookList = response;
         },
     });
 </script>

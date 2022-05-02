@@ -5,10 +5,11 @@
             rewardList: [],
             nowShowModal: false,
             nowItemModal: [],
+            userPoint: JSON.parse(`<%= userData.user_point %>`),
         },
         created() {
             axios
-                .get("https://read-like-a-book-api.herokuapp.com/reward/get/all")
+                .get("http://localhost:5000/reward/get/all")
                 .then(
                     (response) => {
                         if (response.data.success) {

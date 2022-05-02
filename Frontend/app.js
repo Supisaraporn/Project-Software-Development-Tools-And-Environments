@@ -5,6 +5,7 @@ const path = require("path");
 const cookieSession = require("cookie-session");
 const dotenv = require("dotenv");
 const axios = require("axios");
+const fs = require("fs");
 
 dotenv.config({ path: "./.env" });
 
@@ -104,6 +105,12 @@ app.get("/history", ifNotLoggedIn, async (req, res, next) => {
         userData: response.data.payload.data,
         history: JSON.stringify(response02.data.payload.data),
     });
+});
+
+app.get("/read", ifNotLoggedIn, async (req, res, next) => {
+    var data =fs.readFileSync("./public/pid-ta-kang-nueng.pdf");
+    res.contentType("application/pdf");
+    res.send(data);
 });
 
 app.get("/bookshelf", ifNotLoggedIn, async (req, res, next) => {
