@@ -94,7 +94,7 @@ app.get("/history", ifNotLoggedIn, async (req, res, next) => {
     const response = await getUserData(req.session.token);
     const response02 = await axios({
         method: "GET",
-        url: "http://localhost:5000/history/get/user/all",
+        url: "http://159.223.45.216:2515/history/get/user/all",
         headers: {
             authorization: "bearer " + req.session.token,
         },
@@ -287,7 +287,7 @@ app.post("/register", async (req, res, next) => {
     const { username, password, firstName, lastName, email } = req.body;
     axios({
         method: "POST",
-        url: "http://localhost:5000/user/register",
+        url: "http://159.223.45.216:2515/user/register",
         data: {
             id: username,
             password: password,
@@ -332,7 +332,7 @@ app.post("/buy", async (req, res, next) => {
     console.log(increasePoint);
     let response = await axios({
         method: "POST",
-        url: "http://localhost:5000/user/point",
+        url: "http://159.223.45.216:2515/user/point",
         headers: {
             authorization: "bearer " + req.session.token,
         },
@@ -343,7 +343,7 @@ app.post("/buy", async (req, res, next) => {
     })
     await axios({
         method: "POST",
-        url: "http://localhost:5000/owned-book/buy",
+        url: "http://159.223.45.216:2515/owned-book/buy",
         headers: {
             authorization: "bearer " + req.session.token,
         },
@@ -365,7 +365,7 @@ app.post("/buy", async (req, res, next) => {
 app.post("/redeem", async (req, res, next) => {
     let response = await axios({
         method: "POST",
-        url: "http://localhost:5000/user/point",
+        url: "http://159.223.45.216:2515/user/point",
         headers: {
             authorization: "bearer " + req.session.token,
         },
@@ -376,7 +376,7 @@ app.post("/redeem", async (req, res, next) => {
     })
     let response02 = await axios({
         method: "POST",
-        url: "http://localhost:5000/history/add",
+        url: "http://159.223.45.216:2515/history/add",
         headers: {
             authorization: "bearer " + req.session.token,
         },

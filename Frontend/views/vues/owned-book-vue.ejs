@@ -7,7 +7,7 @@
         async mounted() {
             const response = await axios({
                 method: "POST",
-                url: "http://localhost:5000/owned-book/get/user/all",
+                url: "http://159.223.45.216:2515/owned-book/get/user/all",
                 data: {
                     id: document.getElementById("id").value,
                 },

@@ -60,7 +60,7 @@
                 };
                 const response = await axios({
                     method: "POST",
-                    url: "http://localhost:5000/book/insert",
+                    url: "https://test-book-001.herokuapp.com/book/insert",
                     data: data,
                 });
                 if (response.data.success) {
@@ -83,7 +83,7 @@
                 };
                 const response = await axios({
                     method: "POST",
-                    url: "http://localhost:5000/book/update",
+                    url: "https://test-book-001.herokuapp.com/book/update",
                     data: data,
                 });
                 if (response.data.success) {
@@ -95,7 +95,7 @@
             async deleteData() {
                 const response = await axios({
                     method: "POST",
-                    url: "http://localhost:5000/book/delete",
+                    url: "https://test-book-001.herokuapp.com/book/delete",
                     data: {
                         id: this.bookToDelete,
                     },
@@ -141,7 +141,7 @@
         },
         created() {
             axios
-            .get("http://localhost:5000/book/get/all")
+            .get("https://test-book-001.herokuapp.com/book/get/all")
             .then(
                 (response) => {
                     this.collection = response.data.payload.data;
